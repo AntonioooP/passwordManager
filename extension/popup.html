@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>Password Manager</h1>
+    <form id="saveForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Save</button>
+    </form>
+    <button id="generate">Generate Password</button>
+    <button id="retrieveButton">Get passwords</button>
+
+    <div id="retrievedData"></div>
+    <script defer src="popup.js"></script>
+</body>
+</html>

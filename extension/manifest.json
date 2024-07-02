@@ -1,0 +1,19 @@
+{
+	"manifest_version": 3,
+	"name": "Password Manager",
+	"description": "Manages your passwords",
+	"version": "1.0",
+	"permissions": ["storage", "activeTab", "scripting", "tabs"],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"action": {
+		"default_popup": "popup.html",
+		"default_icon": {
+			"16": "images/anto16.png",
+			"32": "images/anto32.png",
+			"48": "images/anto48.png",
+			"128": "images/anto128.png"
+		}
+	}
+}
