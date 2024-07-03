@@ -110,4 +110,38 @@ function generatePassword(length = 16) {
 	return password.join('')
 }
 
+document.getElementById('generate').addEventListener('click', async function () { 
+	const password = generatePassword()
+	const passwordField = document.getElementById('generatedPassword')
+	passwordField.innerText = password
+	passwordField.classList.remove('hidden')
+})
+document.getElementById('generatedPassword').addEventListener('click', async () => {
+	// Create the "Copied!" message div
+	const copiedMessage = document.createElement('div')
+	copiedMessage.innerText = 'Copied!'
+	copiedMessage.style.position = 'absolute'
+	copiedMessage.style.background = 'rgba(0, 0, 0, 0.8)'
+	copiedMessage.style.color = 'white'
+	copiedMessage.style.padding = '5px 10px'
+	copiedMessage.style.borderRadius = '4px'
+	copiedMessage.style.zIndex = '1000'
+
+	const rect = document.getElementById('generatedPassword').getBoundingClientRect()
+	copiedMessage.style.top = `${rect.top - 30}px` 
+	try {
+
+		await navigator.clipboard.writeText(document.getElementById('generatedPassword').innerText)
+	} catch (er) {
+		console.log('Failed to copy password.', er)
+	}
+		
+	document.body.appendChild(copiedMessage)
+
+	setTimeout(function () {
+		copiedMessage.remove()
+	}, 2000)
+})
+
+
 const deterministicEncrypt = async (text, key) => Array.from(new Uint8Array(await crypto.subtle.sign("HMAC", await crypto.subtle.importKey("raw", new TextEncoder().encode(key), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]), new TextEncoder().encode(text)))).map(b => b.toString(16).padStart(2, '0')).join('')
