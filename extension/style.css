@@ -13,7 +13,7 @@ form {
 	align-items: center;
 }
 
-input {
+form > input {
 	width: 100%;
 	padding: 10px;
 	margin: 10px 0;
@@ -85,7 +85,18 @@ td {
     border: 1px solid #fafafa;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+	max-width: 150px;
+	line-break: anywhere;
 }
 td:hover {
     color: grey;
+}
+td > textarea {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 96px;
+	height: auto;
+    overflow: hidden;
+    resize: none;
+	border: none;
+	box-sizing: border-box;
 }
