@@ -1,12 +1,4 @@
-let website;
 
-document.addEventListener('DOMContentLoaded', function () {
-	chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-		let activeTab = tabs[0]
-		let activeTabUrl = new URL(activeTab.url)
-		website = activeTabUrl.hostname
-	})
-})
 ;(async () => {
 	const result = await chrome.storage.local.get(['key', 'apiUrl'])
 	let key = new Uint8Array(result.key),
@@ -56,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					})
 				)
 
-				populateTable(decryptedData)
+				populateTable(decryptedData, apiUrl, key)
 			})
 	})
 })()

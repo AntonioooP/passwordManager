@@ -1,3 +1,11 @@
+document.addEventListener('DOMContentLoaded', function () {
+	chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+		let activeTab = tabs[0]
+		let activeTabUrl = new URL(activeTab.url)
+		window.website = activeTabUrl.hostname
+	})
+})
+let website = window.website
 function encrypt(text, key) {
 	const iv = crypto.getRandomValues(new Uint8Array(16))
 	const cipher = new TextEncoder().encode(text)
@@ -53,14 +61,14 @@ function generatePassword(length = 16) {
 	return password.join('')
 }
 
-function populateTable(data) {
-    const table = document.getElementById('retrievedData')
-    table.classList.remove('hidden')
-    const tableBody = table.getElementsByTagName('tbody')[ 0 ]
-    tableBody.innerHTML = ''
-    
+function populateTable(data, apiUrl, key) {
+	const table = document.getElementById('retrievedData')
+	table.classList.remove('hidden')
+	const tableBody = table.getElementsByTagName('tbody')[0]
+	tableBody.innerHTML = ''
+
 	data.forEach((item) => {
-        const row = document.createElement('tr')
+		const row = document.createElement('tr')
 
 		const usernameCell = document.createElement('td')
 		usernameCell.innerText = item.username
@@ -72,24 +80,29 @@ function populateTable(data) {
 		passwordCell.addEventListener('click', (event) => copyToClipboard(item.password, event.target, null))
 		row.appendChild(passwordCell)
 
+		const editCell = document.createElement('td')
+		editCell.innerText = 'Edit'
+		editCell.addEventListener('click', (event) => editFields(row, apiUrl, key))
+		row.appendChild(editCell)
+
 		tableBody.appendChild(row)
 	})
 }
+
 async function copyToClipboard(text, element, left = 0) {
 	try {
 		await navigator.clipboard.writeText(text)
 
-        const copiedMessage = document.createElement('div')
-        with (copiedMessage) {
-
-            innerText = 'Copied!'
-            style.position = 'absolute'
-		    style.background = 'rgba(0, 0, 0, 0.8)'
-		    style.color = 'white'
-		    style.padding = '5px 10px'
-		    style.borderRadius = '4px'
-		    style.zIndex = '1000'
-        }
+		const copiedMessage = document.createElement('div')
+		with (copiedMessage) {
+			innerText = 'Copied!'
+			style.position = 'absolute'
+			style.background = 'rgba(0, 0, 0, 0.8)'
+			style.color = 'white'
+			style.padding = '5px 10px'
+			style.borderRadius = '4px'
+			style.zIndex = '1000'
+		}
 
 		const rect = element.getBoundingClientRect()
 		copiedMessage.style.top = `${rect.top - 30}px`
