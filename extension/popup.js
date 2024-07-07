@@ -9,8 +9,7 @@
 
 		const username = document.getElementById('username').value
 		const password = document.getElementById('password').value
-
-		const encryptedDomain = await deterministicEncrypt(website, key)
+		const encryptedDomain = await deterministicEncrypt(window.website, key)
 		const encryptedUsername = await encrypt(username, key)
 		const encryptedPassword = await encrypt(password, key)
 		const encryptedData = `${encryptedDomain}: ${encryptedUsername} ${encryptedPassword}`
@@ -27,7 +26,7 @@
 	})
 
 	document.getElementById('retrieveButton').addEventListener('click', async function () {
-		const encryptedDomain = await deterministicEncrypt(website, key)
+		const encryptedDomain = await deterministicEncrypt(window.website, key)
 
 		fetch(apiUrl + '/retrieve', {
 			method: 'POST',

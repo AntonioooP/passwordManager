@@ -82,13 +82,64 @@ function populateTable(data, apiUrl, key) {
 
 		const editCell = document.createElement('td')
 		editCell.innerText = 'Edit'
-		editCell.addEventListener('click', (event) => editFields(row, apiUrl, key))
+		editCell.addEventListener('click', () => editFields(row, apiUrl, key))
 		row.appendChild(editCell)
 
 		tableBody.appendChild(row)
 	})
 }
+function editFields(row, apiUrl, key) {
+	const usernameCell = row.cells[0]
+	const passwordCell = row.cells[1]
+	const editCell = row.cells[2]
 
+	const username = usernameCell.innerText
+	const password = passwordCell.innerText
+
+	usernameCell.innerHTML = `<textarea>${username}</textarea>`
+	passwordCell.innerHTML = `<textarea>${password}</textarea>`
+
+	const usernameTextarea = usernameCell.getElementsByTagName('textarea')[0]
+	const passwordTextarea = passwordCell.getElementsByTagName('textarea')[0]
+	usernameTextarea.addEventListener('click', (event) => event.stopPropagation())
+	passwordTextarea.addEventListener('click', (event) => event.stopPropagation())
+
+
+	editCell.innerText = 'Save'
+    const newEditCell = editCell.cloneNode(true)
+	editCell.parentNode.replaceChild(newEditCell, editCell)
+	newEditCell.addEventListener('click', () => saveFields(row, apiUrl, key))
+}
+
+async function saveFields(row, apiUrl, key) {
+	const rowIndex = row.rowIndex - 1
+	const usernameInput = row.cells[0].getElementsByTagName('textarea')[0]
+	const passwordInput = row.cells[1].getElementsByTagName('textarea')[0]
+	
+	row.cells[0].innerText = usernameInput.value
+	row.cells[1].innerText = passwordInput.value
+
+	const editCell = row.cells[2]
+	editCell.innerText = 'Edit'
+    const newEditCell = editCell.cloneNode(true)
+	editCell.parentNode.replaceChild(newEditCell, editCell)
+	newEditCell.addEventListener('click', () => editFields(row, apiUrl, key))
+	
+	const encryptedDomain = await deterministicEncrypt(window.website, key)
+	const encryptedUsername = await encrypt(usernameInput.value, key)
+	const encryptedPassword = await encrypt(passwordInput.value, key)
+	const encryptedData = `${encryptedDomain}: ${encryptedUsername} ${encryptedPassword}`
+	
+	fetch(apiUrl + '/update', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({item: rowIndex, data: encryptedData})
+	})
+		.then((response) => response.text())
+		.then((data) => alert(data))
+}
 async function copyToClipboard(text, element, left = 0) {
 	try {
 		await navigator.clipboard.writeText(text)
