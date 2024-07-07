@@ -29,13 +29,14 @@ To install and run the backend, follow these steps:
 1. Clone the repository.
 2. Navigate to the `backend` directory.
 3. Run `npm i` to install the dependencies.
-4. Run `node .` to start the server.
+4. Run `node .` to start the server. For additional safety, the server should be HTTPS, although it's not strictly required since the data is encrypted before it's sent.
 
 To install and run the extension, follow these steps:
 
 1. Clone the repository.
 2. Navigate to the `extension` directory.
-3. Load the extension in Chrome by going to `chrome://extensions`, enabling developer mode, and clicking "Load unpacked". Then, select the `extension` directory.
+3. Create `config.json` file and add a field `key` and `apiUrl` with their corresponding values (note that key is a Uint8Array).
+4. Load the extension in Chrome by going to `chrome://extensions`, enabling developer mode, and clicking "Load unpacked". Then, select the `extension` directory.
 
 ## Contributing
 
