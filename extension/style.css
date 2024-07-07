@@ -85,6 +85,7 @@ td {
     border: 1px solid #fafafa;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+	min-width: 25px;
 	max-width: 150px;
 	line-break: anywhere;
 }
@@ -98,5 +99,6 @@ td > textarea {
     overflow: hidden;
     resize: none;
 	border: none;
+	outline: none;
 	box-sizing: border-box;
 }
