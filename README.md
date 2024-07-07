@@ -2,7 +2,7 @@
 
 This is a password manager application that allows users to *securely* manage their passwords. The application consists of two main components: the backend and a chrome extension. The purpose of building this application was to not rely on any third-party services.
 
-Note that this isn't a project that should be considered as a secure password manager because of the use of encryption, even though it does have a somewhat secure encryption function, it has the risk of having to store a key in a local file. 
+Note that this isn't a project that should be considered as a secure password manager because of the use of client-side encryption, even though it does have a somewhat secure encryption function, it has the risk of having to store a key in a local file where it can be accessed by anyone on the computer, but I mean why have a password manager if anyone had access to your computer so 
 ## Backend
 
 The backend is responsible for handling API requests, managing passwords, and interacting with the database. It is built using Node.js and Express.js, the database is just a `.txt` file, ideally it would be in a safer database, you are welcome to use any database you want.
@@ -15,11 +15,11 @@ The backend is responsible for handling API requests, managing passwords, and in
 
 ## Extension
 
-The extension folder is a Chrome extension that allows users to manage their passwords securely within the browser.
+The extension folder is a Chrome extension that allows users to manage their passwords securely within the browser, generate a strong 16 character password, and retrieve, edit and delete previously saved passwords.
 
 ### Features
 
-- **index.html:** The main interface for the Password Manager extension. (Needs CSS to be improved)
+- **index.html:** The main interface for the Password Manager extension.
 - **popup.js:** The script responsible for handling interactions within the popup window of the extension. It facilitates functionalities like displaying saved passwords, adding new passwords, and generating secure passwords.
 
 ## Installation
