@@ -35,7 +35,7 @@ To install and run the extension, follow these steps:
 
 1. Clone the repository.
 2. Navigate to the `extension` directory.
-3. Create `config.json` file and add a field `key` and `apiUrl` with their corresponding values (note that key is a Uint8Array).
+3. Create `config.json` file and add a field `key` and `apiUrl` with their corresponding values (note that key is a Uint8Array, this can be adapted to allow a string as key by modifying the encrypt and decrypt functions) 
 4. Load the extension in Chrome by going to `chrome://extensions`, enabling developer mode, and clicking "Load unpacked". Then, select the `extension` directory.
 
 ## Contributing
