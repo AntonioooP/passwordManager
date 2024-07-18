@@ -28,7 +28,7 @@ app.post('/retrieve', (req, res) => {
 
 app.post('/update', (req, res) => {
 	const {item, data} = req.body
-	if (isNaN(item) || !data) return res.status(400).send('No data provided')
+	if (isNaN(item)) return res.status(400).send('No item row provided')
 
 	fs.readFile('passwords.txt', 'utf8', (err, fileData) => {
 		if (err) return res.status(500).send('Error reading file')
@@ -36,13 +36,16 @@ app.post('/update', (req, res) => {
 		const lines = fileData.split('\n')
 		let lineFound = false
 
-		const updatedLines = lines.map((line, index) => {
-			if (index === item) {
-				lineFound = true
-				return data
-			}
-			return line
-		})
+		const updatedLines = lines
+			.map((line, index) => {
+				if (index === item) {
+					lineFound = true
+					return data !== undefined ? data : null
+				}
+				return line
+			})
+			.filter((line) => line !== null)
+
 		if (!lineFound) return res.status(404).send('Item not found')
 
 		fs.writeFile('passwords.txt', updatedLines.join('\n'), (err) => {
